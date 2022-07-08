@@ -49,8 +49,8 @@ jobs:
 
     - name: Docker img build & Dockerhub push
       run: |
-        docker image build -t DOCKER_IMG_NAME:${GITHUB_SHA::7} .
-        docker push DOCKER_IMG_NAME:${GITHUB_SHA::7}
+        docker image build -t ${DOCKER_IMG_NAME}:${GITHUB_SHA::7} .
+        docker push ${DOCKER_IMG_NAME}:${GITHUB_SHA::7}
 
     - name: Docker Deploy
       uses: appleboy/ssh-action@master
