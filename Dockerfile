@@ -1,4 +1,3 @@
 FROM openjdk:8-jre
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} gitAction.jar
-ENTRYPOINT ["java", "-jar", "gitAction.jar"]
+COPY /build/libs/gitAction-0.0.1-SNAPSHOT.jar gitaction.jar
+ENTRYPOINT ["java", "-jar", "gitaction.jar"]
