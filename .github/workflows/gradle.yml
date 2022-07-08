@@ -64,9 +64,5 @@ jobs:
           "DOCKER_IMG_NAME
           $GITHUB_SHA" \
           > env.txt
-          yes | docker image prune -a
+          yes | docker image pull -a
           docker pull DOCKER_IMG_NAME:${GITHUB_SHA::7}
-          
-          sudo ./start.sh
-          sudo ./health.sh
-          sudo ./stop.sh
