@@ -60,5 +60,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ubuntu
         script: |
+          ssh -i ${key} ubuntu@54.180.154.178
           docker pull eank0108/gitaction:f91e3eb
         
