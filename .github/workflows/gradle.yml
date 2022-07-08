@@ -50,3 +50,22 @@ jobs:
       run: |
         docker image build -t ${{ secrets.DOCKERHUB_USERNAME }}/gitaction:${GITHUB_SHA::7} .
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/gitaction:${GITHUB_SHA::7}
+
+    - name: Docker Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ubuntu
+        key: ${{ secrets.PRIVATE_KEY }}
+        envs: GITHUB_SHA,DOCKER_IMG_FULL_NAME
+        script: |
+          echo -e \
+          "$DOCKER_IMG_FULL_NAME
+          $GITHUB_SHA" \
+          > env.txt
+          yes | docker image prune -a
+          docker pull $DOCKER_IMG_FULL_NAME:${GITHUB_SHA::7}
+          
+          sudo ./start.sh
+          sudo ./health.sh
+          sudo ./stop.sh
