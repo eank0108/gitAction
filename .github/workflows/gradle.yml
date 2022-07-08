@@ -53,13 +53,18 @@ jobs:
         docker push ${DOCKER_IMG_NAME}:${GITHUB_SHA::7}
 
 
-    - name: Deploy
+    - name: Docker Deploy
       uses: appleboy/ssh-action@master
       with:
-        host: ${ { secrets.HOST } }
-        username: ubuntu
-        key: ${ { secrets.PRIVATE_KEY } }
-        port: 22
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        envs: GITHUB_SHA,DOCKER_IMG_FULL_NAME
         script: |
-          whoami
-        
+          echo -e \
+          "$DOCKER_IMG_FULL_NAME
+          $GITHUB_SHA" \
+          > env.txt
+          yes | docker image prune -a
+          docker pull $DOCKER_IMG_FULL_NAME:${GITHUB_SHA::7}
+          
