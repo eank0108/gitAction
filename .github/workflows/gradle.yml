@@ -53,13 +53,14 @@ jobs:
         docker push ${DOCKER_IMG_NAME}:${GITHUB_SHA::7}
 
 
-    - name: Run scripts in server
+    - name: Deploy
       uses: appleboy/ssh-action@master
       with:
-        key: ${{ secrets.PRIVATE_KEY }}
         host: ${{ secrets.HOST }}
         username: ubuntu
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
         script: |
-          ssh -i ${key} ubuntu@54.180.154.178
-          docker pull eank0108/gitaction:f91e3eb
+          whoami
+          git pull origin master
         
