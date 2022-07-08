@@ -56,7 +56,7 @@ jobs:
     - name: Repository checkout
       uses: actions/checkout@v2
     - name: Docker Deploy
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@0.1.4
       with:
         host: ${{ secrets.HOST }}
         username: ubuntu
