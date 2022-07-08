@@ -58,6 +58,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ubuntu
         key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
         envs: GITHUB_SHA,DOCKER_IMG_NAME
         script: |
           echo -e \
