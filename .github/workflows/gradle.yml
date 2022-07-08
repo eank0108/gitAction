@@ -52,18 +52,18 @@ jobs:
         docker image build -t ${DOCKER_IMG_NAME}:${GITHUB_SHA::7} .
         docker push ${DOCKER_IMG_NAME}:${GITHUB_SHA::7}
 
-    - name: Docker Deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: 22
-        envs: GITHUB_SHA,DOCKER_IMG_NAME
-        script: |
-          echo -e \
-          "DOCKER_IMG_NAME
-          $GITHUB_SHA" \
-          > env.txt
-          yes | docker image pull -a
-          docker pull DOCKER_IMG_NAME:${GITHUB_SHA::7}
+
+
+  - name: Deploy in EC2
+      env:
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY  }}
+        HOSTNAME : ${{ secrets.HOST  }}
+        USER_NAME : ubuntu
+        DOCKER_IMG_NAME : ${DOCKER_IMG_NAME}
+        GITHUB_SHA : ${GITHUB_SHA}
+      run: |
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+        
+        docker pull DOCKER_IMG_NAME:${GITHUB_SHA::7}
+        
