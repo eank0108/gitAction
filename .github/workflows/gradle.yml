@@ -54,15 +54,12 @@ jobs:
 
 
 
-    - name: Deploy in EC2
-      env:
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY  }}
-        HOST : ${{ secrets.HOST  }}
-        USER_NAME : ubuntu
-        DOCKER_IMG_NAME : ${DOCKER_IMG_NAME}
-        GITHUB_SHA : ${GITHUB_SHA}
-      run: |
-        ssh -i {$PRIVATE_KEY} ${USER_NAME}@${HOST}
-        
-        docker pull ${DOCKER_IMG_NAME}:${GITHUB_SHA::7}
+    - name: Run scripts in server
+      uses: appleboy/ssh-action@master
+      with:
+        key: ${{ secrets.PRIVATE_KEY }}
+        host: ${{ secrets.HOST }}
+        username: ubuntu
+        script: |
+          docker pull eank0108/gitaction:f91e3eb
         
