@@ -48,5 +48,5 @@ jobs:
 
     - name: Docker img build & Dockerhub push
       run: |
-        docker image build -t ${{ secrets.DOCKERHUB_USERNAME }}/gitaction:1.0 .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/gitaction:1.0
+        docker image build -t ${{ secrets.DOCKERHUB_USERNAME }}/gitaction:${GITHUB_SHA::7} .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/gitaction:${GITHUB_SHA::7}
