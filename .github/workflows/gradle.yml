@@ -57,12 +57,12 @@ jobs:
     - name: Deploy in EC2
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY  }}
-        HOSTNAME : ${{ secrets.HOST  }}
+        HOST : ${{ secrets.HOST  }}
         USER_NAME : ubuntu
         DOCKER_IMG_NAME : ${DOCKER_IMG_NAME}
         GITHUB_SHA : ${GITHUB_SHA}
       run: |
-        ssh -i {$PRIVATE_KEY} ${USER_NAME}@${HOSTNAME}
+        ssh -i {$PRIVATE_KEY} ${USER_NAME}@${HOST}
         
-        docker pull DOCKER_IMG_NAME:${GITHUB_SHA::7}
+        docker pull ${DOCKER_IMG_NAME}:${GITHUB_SHA::7}
         
