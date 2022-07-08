@@ -62,8 +62,7 @@ jobs:
         DOCKER_IMG_NAME : ${DOCKER_IMG_NAME}
         GITHUB_SHA : ${GITHUB_SHA}
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+        ssh -i {$PRIVATE_KEY} ${USER_NAME}@${HOSTNAME}
         
         docker pull DOCKER_IMG_NAME:${GITHUB_SHA::7}
         
