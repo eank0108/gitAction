@@ -38,4 +38,4 @@ jobs:
         arguments: build
 
     - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag gitAction:$(date +%s)
+      run: docker build . --file Dockerfile --tag gitAction:$(date +%s)
